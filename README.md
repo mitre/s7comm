@@ -1,5 +1,7 @@
 # Caldera for OT plugin: S7comm
 
+> Contributed by Palo Alto Networks. This repository is not maintained by MITRE.
+
 A [Caldera for OT](https://github.com/mitre/caldera-ot) plugin supplying
 [Caldera](https://github.com/mitre/caldera) with **Siemens S7 (S7comm)** protocol
 TTPs mapped to MITRE ATT&CK® for ICS. This is part of a series of plugins that
