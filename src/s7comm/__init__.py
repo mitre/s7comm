@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: Apache-2.0
 """A small S7comm (Siemens S7) client action library built on python-snap7.
 
 Exposes S7Client, a thin wrapper turning the snap7 client API into the discrete

@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: Apache-2.0
 """Unit tests for the s7comm_cli action library.
 
 Stands up a local snap7 server with a data block and drives it with S7Client,
