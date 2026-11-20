@@ -46,7 +46,7 @@ The following table(s) list each plugin ability by their corresponding tactic.
 This section describes the main components of the plugin and how they interface.
 
 ### Block Diagram
-![block diagram](assets/s7comm_diagram.jpg)
+![block diagram](assets/s7comm_diagram.png)
 
 The S7comm plugin exposes several new protocol specific abilities to your Caldera instance. The abilities are executed from a host running a Caldera agent via the corresponding payload. Abilities must target devices that support the S7comm protocol to achieve described effects. By default the plugin will use __102__ for all communication.
 
