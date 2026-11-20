@@ -19,3 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A GUI panel (splash service plus Magma Vue view) listing the plugin's abilities.
 - An output parser that turns data block reads into `s7comm.db.*` facts.
 - Fieldmanual documentation in `docs/s7comm.md`.
+
+[unreleased]: https://github.com/mitre/s7comm/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/mitre/s7comm/releases/tag/v1.0.0
