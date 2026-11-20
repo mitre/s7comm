@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: Apache-2.0
 from app.utility.base_world import BaseWorld
 from plugins.s7comm.app.s7comm_svc import S7commService
 

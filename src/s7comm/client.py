@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: Apache-2.0
 """S7comm (Siemens S7) client actions, backed by python-snap7.
 
 Transport-only: it takes numeric DB numbers / offsets / values and has no knowledge
