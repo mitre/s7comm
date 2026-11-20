@@ -1,7 +1,9 @@
 # Caldera for OT plugin: S7comm
 
+> Contributed by Palo Alto Networks. Not maintained by MITRE: the abilities and their pinned dependencies are frozen as contributed and will not be updated.
+
 A [Caldera for OT](https://github.com/mitre/caldera-ot) plugin supplying
-[Caldera](https://github.com/mitre/caldera) with **Siemens S7 (S7comm)** protocol
+[Apache Caldera](https://github.com/apache/caldera) with **Siemens S7 (S7comm)** protocol
 TTPs mapped to MITRE ATT&CK® for ICS. This is part of a series of plugins that
 provide added threat emulation capability for Operational Technology (OT)
 environments.
@@ -23,12 +25,12 @@ fieldmanual, once the Caldera server is running.
 | S7comm - Read System Status List | Discovery | T0846 Remote System Discovery |
 | S7comm - Write Data Block | Impair Process Control | T0836 Modify Parameter |
 | S7comm - Stop CPU | Inhibit Response Function | T0816 Device Restart/Shutdown |
-| S7comm - Start CPU | Execution | T0816 Device Restart/Shutdown |
+| S7comm - Start CPU | Execution | T0858 Change Operating Mode |
 
 ## Installation
 
 To run Caldera along with the S7comm plugin:
-1. Download Caldera as detailed in the [Installation Guide](https://github.com/mitre/caldera)
+1. Download Apache Caldera as detailed in the [Installation Guide](https://github.com/apache/caldera)
 2. Install this plugin into Caldera's plugin directory as `caldera/plugins/s7comm`.
    Clone the [Caldera for OT](https://github.com/mitre/caldera-ot) collection and
    move the `s7comm` directory into place:
@@ -51,8 +53,7 @@ the target device by the Caldera agent. To execute, the payloads must be compati
 with the target device operating system. The Linux payload (`s7comm_cli`) ships in
 [`payloads/`](payloads/); the Windows (`s7comm_cli.exe`) and macOS
 (`s7comm_cli_darwin`) payloads are produced by the build workflow in
-[`.github/workflows/ci.yaml`](.github/workflows/ci.yaml) and published as release
-assets. The Linux payload is built on Ubuntu 22.04 (`glibc` 2.35), so it requires
+[`.github/workflows/ci.yaml`](.github/workflows/ci.yaml) and committed into the plugin's [`payloads/`](payloads/) directory by the build workflow. The Linux payload is built on Ubuntu 22.04 (`glibc` 2.35), so it requires
 `glibc` 2.35 or greater; rebuilding it on an older distribution lowers that floor.
 For more information on compatibility, see the
 [fieldmanual documentation](docs/s7comm.md#payload) and the
@@ -90,7 +91,7 @@ collected values can seed later abilities.
 
 ## Authors
 
-This plugin was contributed by **Asher Davila** and **Malav Vyas**.
+This plugin was contributed by **Asher Davila** ([AsherDLL](https://github.com/AsherDLL)) and **Malav Vyas** ([malavvyas](https://github.com/malavvyas)) of Palo Alto Networks.
 
 ## License
 

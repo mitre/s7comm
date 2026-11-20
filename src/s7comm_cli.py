@@ -1,4 +1,3 @@
-# SPDX-License-Identifier: Apache-2.0
 """s7comm_cli - a command-line S7comm (Siemens S7) client for adversary emulation.
 
 A generic client that speaks S7comm to any S7 PLC or snap7 outstation. Transport-only

@@ -1,5 +1,4 @@
 # -*- mode: python ; coding: utf-8 -*-
-# SPDX-License-Identifier: Apache-2.0
 # PyInstaller spec: bundle s7comm_cli into a single executable, including the
 # native libsnap7 shared library that python-snap7 loads at runtime.
 from PyInstaller.utils.hooks import collect_all

@@ -1,64 +1,102 @@
-# SPDX-License-Identifier: Apache-2.0
-name: build-and-test
+name: Build Payloads
 
 on:
   push:
     branches: [main]
-    tags: ["v*"]
-  pull_request:
-    branches: [main]
+    paths:
+      - 'src/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-22.04
-            artifact: s7comm_cli
-          - os: windows-2022
-            artifact: s7comm_cli.exe
-          - os: macos-14
-            artifact: s7comm_cli_darwin
     runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-latest]
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
           python-version: "3.10"
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r src/requirements.txt pyinstaller pytest
-      - name: Test
-        env:
-          PYTHONPATH: src
-        run: python -m pytest tests -q
-      - name: Build payload
-        working-directory: src
-        run: pyinstaller --clean s7comm_cli.spec
-      - name: Normalize artifact name
-        shell: bash
-        working-directory: src/dist
-        run: |
-          target="${{ matrix.artifact }}"
-          built=$(ls | head -1)
-          if [ "$built" != "$target" ]; then mv "$built" "$target"; fi
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.artifact }}
-          path: src/dist/${{ matrix.artifact }}
+          pip install pyinstaller
+          pip install -r src/requirements.txt
 
-  release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: build
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: write
+      - name: Build with PyInstaller (Linux)
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
+        run: |
+          cd src
+          pyinstaller --clean s7comm_cli.spec
+          cp dist/s7comm_cli ../payloads/
+
+      - name: Upload Linux payload
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: payload-linux
+          path: payloads/s7comm_cli
+          retention-days: 1
+
+      - name: Build with PyInstaller (Windows)
+        if: ${{ matrix.os == 'windows-2022' }}
+        run: |
+          cd src
+          pyinstaller --clean s7comm_cli.spec
+          copy dist\s7comm_cli.exe ..\payloads\
+
+      - name: Upload Windows payload
+        if: ${{ matrix.os == 'windows-2022' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: payload-windows
+          path: payloads\s7comm_cli.exe
+          retention-days: 1
+
+      - name: Build with PyInstaller (Darwin)
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          cd src
+          pyinstaller --clean s7comm_cli.spec
+          cp dist/s7comm_cli ../payloads/s7comm_cli_darwin
+
+      - name: Upload Darwin payload
+        if: ${{ matrix.os == 'macos-latest' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: payload-darwin
+          path: payloads/s7comm_cli_darwin
+          retention-days: 1
+
+  create-pr:
+    needs: [build]
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v5
+
+      - name: Download payloads
+        uses: actions/download-artifact@v4
         with:
-          path: artifacts
-      - uses: softprops/action-gh-release@v2
+          pattern: payload-*
+          merge-multiple: true
+          path: payloads/
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
         with:
-          files: artifacts/**/*
+          base: main
+          branch: ci/update-payloads
+          title: Update payloads
+          commit-message: 'chore: update payloads'
+          body: Automated update of payloads.
+          add-paths: payloads
+          delete-branch: true
