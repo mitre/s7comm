@@ -6,8 +6,8 @@
     Start a Siemens S7 CPU (S7 PLC Cold Start). Restarts the control program; used
     to bring a stopped CPU back into run, or to force a restart.
   tactic: execution
-  technique_id: T0816
-  technique_name: Device Restart/Shutdown
+  technique_id: T0858
+  technique_name: Change Operating Mode
   executors:
   - platform: linux
     name: sh
