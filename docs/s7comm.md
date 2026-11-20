@@ -62,8 +62,8 @@ The following libraries were used to build the S7comm payloads:
 
 |Library|Version|License|
 |:--|:--|:--|
-|[python-snap7](https://pypi.org/project/python-snap7/)|[3.x](https://pypi.org/project/python-snap7/)|[MIT](https://github.com/gijzelaerr/python-snap7/blob/master/LICENSE)|
-|snap7 (native library, bundled)|[1.x](https://snap7.sourceforge.net/)|[LGPL-3.0](https://snap7.sourceforge.net/)|
+|[python-snap7](https://pypi.org/project/python-snap7/)|[3.6.0](https://pypi.org/project/python-snap7/3.6.0/)|[MIT](https://github.com/gijzelaerr/python-snap7/blob/master/LICENSE)|
+|snap7 (native library, bundled)|bundled by python-snap7|[LGPL-3.0](https://snap7.sourceforge.net/)|
 
 ## Usage
 This section describes how to initially deploy and execute the abilities present within the S7comm plugin.
@@ -80,260 +80,263 @@ This section describes how to initially deploy and execute the abilities present
 #### S7comm - Read CPU State
 Read the run/stop state of a Siemens S7 CPU. Reveals whether the PLC is
 currently running its control program.
-  
 
-__Usage:__  
-linux: (sh)  
-```
-COMMAND>> ./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-state
+__Ability Command:__
+<details open>
+<summary>Windows (psh)</summary>
+<br>
 
+```caldera
+.\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-state
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-windows: (psh)  
-```
-COMMAND>> .\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-state
+</details>
+<details>
+<summary>Linux (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-state
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-darwin: (sh)  
-```
-COMMAND>> ./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-state
+</details>
+<details>
+<summary>Darwin (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-state
 ```  
 
+</details>
+<br>
+
 __Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
+| Name | Description | Type |
+|:-----|:------------|:----:|
+| `s7comm.server.ip` | Target S7 PLC IP address | string |
+| `s7comm.rack` | CPU rack number | int |
+| `s7comm.slot` | CPU slot number | int |
+| `s7comm.server.port` | Target S7 ISO-on-TCP port (default 102) | int |
+
 #### S7comm - Read Data Block
 Read a Siemens S7 data block (S7comm Read Var). Discloses process values,
 setpoints, or program data held in a DB on the target CPU.
-  
 
-__Usage:__  
-linux: (sh)  
-```
-COMMAND>> ./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-db #{s7comm.db.number} #{s7comm.db.start} #{s7comm.db.size} --as real
+__Ability Command:__
+<details open>
+<summary>Windows (psh)</summary>
+<br>
 
+```caldera
+.\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-db #{s7comm.db.number} #{s7comm.db.start} #{s7comm.db.size} --as real
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.db.number`: Data block (DB) number
-- `s7comm.db.start`: Start byte offset within the data block
-- `s7comm.db.size`: Number of bytes to read
-windows: (psh)  
-```
-COMMAND>> .\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-db #{s7comm.db.number} #{s7comm.db.start} #{s7comm.db.size} --as real
+</details>
+<details>
+<summary>Linux (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-db #{s7comm.db.number} #{s7comm.db.start} #{s7comm.db.size} --as real
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.db.number`: Data block (DB) number
-- `s7comm.db.start`: Start byte offset within the data block
-- `s7comm.db.size`: Number of bytes to read
-darwin: (sh)  
-```
-COMMAND>> ./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-db #{s7comm.db.number} #{s7comm.db.start} #{s7comm.db.size} --as real
+</details>
+<details>
+<summary>Darwin (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-db #{s7comm.db.number} #{s7comm.db.start} #{s7comm.db.size} --as real
 ```  
 
+</details>
+<br>
+
 __Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.db.number`: Data block (DB) number
-- `s7comm.db.start`: Start byte offset within the data block
-- `s7comm.db.size`: Number of bytes to read
+| Name | Description | Type |
+|:-----|:------------|:----:|
+| `s7comm.server.ip` | Target S7 PLC IP address | string |
+| `s7comm.rack` | CPU rack number | int |
+| `s7comm.slot` | CPU slot number | int |
+| `s7comm.server.port` | Target S7 ISO-on-TCP port (default 102) | int |
+| `s7comm.db.number` | Data block (DB) number | int |
+| `s7comm.db.start` | Start byte offset within the data block | int |
+| `s7comm.db.size` | Number of bytes to read | int |
+
 #### S7comm - Read System Status List
 Read a Siemens S7 System Status List (SZL), e.g. module identification
 (0x0011) or component identification (0x001c). Fingerprints the CPU - order
 number, hardware/firmware version - for target identification.
-  
 
-__Usage:__  
-linux: (sh)  
-```
-COMMAND>> ./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-szl #{s7comm.szl.id}
+__Ability Command:__
+<details open>
+<summary>Windows (psh)</summary>
+<br>
 
+```caldera
+.\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-szl #{s7comm.szl.id}
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.szl.id`: System Status List (SZL) ID to read
-windows: (psh)  
-```
-COMMAND>> .\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-szl #{s7comm.szl.id}
+</details>
+<details>
+<summary>Linux (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-szl #{s7comm.szl.id}
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.szl.id`: System Status List (SZL) ID to read
-darwin: (sh)  
-```
-COMMAND>> ./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-szl #{s7comm.szl.id}
+</details>
+<details>
+<summary>Darwin (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} read-szl #{s7comm.szl.id}
 ```  
 
+</details>
+<br>
+
 __Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.szl.id`: System Status List (SZL) ID to read
+| Name | Description | Type |
+|:-----|:------------|:----:|
+| `s7comm.server.ip` | Target S7 PLC IP address | string |
+| `s7comm.rack` | CPU rack number | int |
+| `s7comm.slot` | CPU slot number | int |
+| `s7comm.server.port` | Target S7 ISO-on-TCP port (default 102) | int |
+| `s7comm.szl.id` | System Status List (SZL) ID to read | string |
+
 #### S7comm - Start CPU
 Start a Siemens S7 CPU (S7 PLC Cold Start). Restarts the control program; used
 to bring a stopped CPU back into run, or to force a restart.
-  
 
-__Usage:__  
-linux: (sh)  
-```
-COMMAND>> ./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-start
+__Ability Command:__
+<details open>
+<summary>Windows (psh)</summary>
+<br>
 
+```caldera
+.\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-start
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-windows: (psh)  
-```
-COMMAND>> .\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-start
+</details>
+<details>
+<summary>Linux (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-start
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-darwin: (sh)  
-```
-COMMAND>> ./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-start
+</details>
+<details>
+<summary>Darwin (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-start
 ```  
 
+</details>
+<br>
+
 __Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
+| Name | Description | Type |
+|:-----|:------------|:----:|
+| `s7comm.server.ip` | Target S7 PLC IP address | string |
+| `s7comm.rack` | CPU rack number | int |
+| `s7comm.slot` | CPU slot number | int |
+| `s7comm.server.port` | Target S7 ISO-on-TCP port (default 102) | int |
+
 #### S7comm - Write Data Block
 Write a value into a Siemens S7 data block (S7comm Write Var). Altering a DB
 changes a setpoint or process parameter - e.g. a drive-speed setpoint - modifying
 how the process is controlled (the Stuxnet class of manipulation).
-  
 
-__Usage:__  
-linux: (sh)  
-```
-COMMAND>> ./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} write-db #{s7comm.db.number} #{s7comm.db.start} --real #{s7comm.write.value}
+__Ability Command:__
+<details open>
+<summary>Windows (psh)</summary>
+<br>
 
+```caldera
+.\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} write-db #{s7comm.db.number} #{s7comm.db.start} --real #{s7comm.write.value}
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.db.number`: Data block (DB) number
-- `s7comm.db.start`: Start byte offset within the data block
-- `s7comm.write.value`: Value to write to the data block
-windows: (psh)  
-```
-COMMAND>> .\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} write-db #{s7comm.db.number} #{s7comm.db.start} --real #{s7comm.write.value}
+</details>
+<details>
+<summary>Linux (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} write-db #{s7comm.db.number} #{s7comm.db.start} --real #{s7comm.write.value}
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.db.number`: Data block (DB) number
-- `s7comm.db.start`: Start byte offset within the data block
-- `s7comm.write.value`: Value to write to the data block
-darwin: (sh)  
-```
-COMMAND>> ./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} write-db #{s7comm.db.number} #{s7comm.db.start} --real #{s7comm.write.value}
+</details>
+<details>
+<summary>Darwin (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} write-db #{s7comm.db.number} #{s7comm.db.start} --real #{s7comm.write.value}
 ```  
 
+</details>
+<br>
+
 __Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-- `s7comm.db.number`: Data block (DB) number
-- `s7comm.db.start`: Start byte offset within the data block
-- `s7comm.write.value`: Value to write to the data block
+| Name | Description | Type |
+|:-----|:------------|:----:|
+| `s7comm.server.ip` | Target S7 PLC IP address | string |
+| `s7comm.rack` | CPU rack number | int |
+| `s7comm.slot` | CPU slot number | int |
+| `s7comm.server.port` | Target S7 ISO-on-TCP port (default 102) | int |
+| `s7comm.db.number` | Data block (DB) number | int |
+| `s7comm.db.start` | Start byte offset within the data block | int |
+| `s7comm.write.value` | Value to write to the data block | float |
+
 #### S7comm - Stop CPU
 Stop a Siemens S7 CPU (S7 PLC Stop). Halts the control program, denying the
 process its automation and inhibiting the device's response.
-  
 
-__Usage:__  
-linux: (sh)  
-```
-COMMAND>> ./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-stop
+__Ability Command:__
+<details open>
+<summary>Windows (psh)</summary>
+<br>
 
+```caldera
+.\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-stop
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-windows: (psh)  
-```
-COMMAND>> .\s7comm_cli.exe #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-stop
+</details>
+<details>
+<summary>Linux (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-stop
 ```  
 
-__Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
-darwin: (sh)  
-```
-COMMAND>> ./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-stop
+</details>
+<details>
+<summary>Darwin (sh)</summary>
+<br>
 
+```caldera
+./s7comm_cli_darwin #{s7comm.server.ip} --rack #{s7comm.rack} --slot #{s7comm.slot} --port #{s7comm.server.port} cpu-stop
 ```  
 
+</details>
+<br>
+
 __Facts:__  
-- `s7comm.server.ip`: Target S7 PLC IP address
-- `s7comm.rack`: CPU rack number
-- `s7comm.slot`: CPU slot number
-- `s7comm.server.port`: Target S7 ISO-on-TCP port (default 102)
+| Name | Description | Type |
+|:-----|:------------|:----:|
+| `s7comm.server.ip` | Target S7 PLC IP address | string |
+| `s7comm.rack` | CPU rack number | int |
+| `s7comm.slot` | CPU slot number | int |
+| `s7comm.server.port` | Target S7 ISO-on-TCP port (default 102) | int |
 
 ### Source Code
 The source code for the S7comm plugin can be found inside this plugin's [src directory](/src/).
